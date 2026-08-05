@@ -1,28 +1,24 @@
 
 import os
 import pandas as pd
+import streamlit as st
 
 from docx import Document
 
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-from langchain_core.runnables import RunnableSequence
-from langchain_core.runnables import RunnableParallel
 
-from pydantic import BaseModel
 
-print("All libraries imported successfully!")
-
-GOOGLE_API_KEY="AQ.Ab8RN6InDk5b8KPDItVfcRnGf2dyh_0m3VBSR5wBvXlKSHgrTQ"
+GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 
 os.environ["GOOGLE_API_KEY"]=GOOGLE_API_KEY
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 llm = ChatGoogleGenerativeAI(
-    model="gemini-3.5-flash-lite",
+    model="model="gemini-2.5-flash",
     temperature=0.3
 )
 
@@ -114,13 +110,13 @@ Expected timeline:
 
 proposal = proposal_chain.invoke(
     {
-        "company_profile": company_profile,
-        "client_requirement": client_requirement
+        "company": company_profile,
+        "requirement": client_requirement
     }
 )
 
 
-print(proposal)
+
 
 doc = Document()
 
@@ -138,10 +134,15 @@ doc.save(
 )
 
 
-print("Proposal saved")
-
-from google.colab import files
-
-files.download(
+doc.save(
     "AI_Business_Proposal.docx"
 )
+with open("AI_Business_Proposal.docx", "rb") as file:
+
+    st.download_button(
+        label="Download Proposal",
+        data=file,
+        file_name="AI_Business_Proposal.docx",
+        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    )
+
