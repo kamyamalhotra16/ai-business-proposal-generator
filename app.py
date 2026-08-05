@@ -11,10 +11,18 @@ from langchain_core.output_parsers import StrOutputParser
 
 
 
-GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+import os
+import streamlit as st
 
-os.environ["GOOGLE_API_KEY"]=GOOGLE_API_KEY
 
+if "GOOGLE_API_KEY" in st.secrets:
+    GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+else:
+    st.error("Please add GOOGLE_API_KEY in Streamlit Secrets")
+    st.stop()
+
+
+os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 llm = ChatGoogleGenerativeAI(
