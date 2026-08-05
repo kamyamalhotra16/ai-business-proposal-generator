@@ -1,10 +1,3 @@
-!pip install langchain
-!pip install langchain-google-genai 
-!pip install google-generativeai 
-!pip install python-docx 
-!pip install pydantic
-!pip install python-dotenv 
-!pip install streamlit
 
 import os
 import pandas as pd
