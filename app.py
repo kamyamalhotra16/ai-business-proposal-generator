@@ -26,61 +26,45 @@ llm = ChatGoogleGenerativeAI(
     temperature=0.3
 )
 
-proposal_template = """
+template = """
 
-You are a professional business proposal writer.
-
-Create a complete proposal using the information below.
+Create a professional business proposal.
 
 Company Profile:
 
-{company_profile}
+{company}
 
 
 Client Requirement:
 
-{client_requirement}
+{requirement}
 
 
-The proposal must contain these sections:
+Include:
 
 1. Executive Summary
-
 2. Company Introduction
-
-3. Understanding of Client Requirements
-
+3. Client Understanding
 4. Proposed Solution
-
 5. Scope of Work
-
 6. Deliverables
-
-7. Implementation Timeline
-
+7. Timeline
 8. Technology Stack
-
 9. Pricing
-
-10. Assumptions
-
-11. Terms and Conditions
-
-12. Conclusion
-
-
-Write in professional business language.
+10. Conclusion
 
 """
 
 
 prompt = PromptTemplate(
-    template=proposal_template,
     input_variables=[
-        "company_profile",
-        "client_requirement"
-    ]
+        "company",
+        "requirement"
+    ],
+    template=template
 )
+
+
 
 parser = StrOutputParser()
 
